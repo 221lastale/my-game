@@ -76,7 +76,7 @@ body::after {
 #screen-start { z-index:10; background:var(--dark); }
 #screen-start .bg {
   position:absolute; inset:0;
-  background:url('assets/start-bg.jpg.png') center top/cover;
+  background:url('assets/start-bg.png') center top/cover;
   opacity:0.5; filter:saturate(1.3) contrast(1.1);
 }
 #screen-start .vignette {
@@ -131,7 +131,7 @@ body::after {
 #screen-battle { z-index:10; }
 #screen-battle .bg {
   position:absolute; inset:0;
-  background:url('assets/battle-bg.jpg.png') center/cover; opacity:0.65;
+  background:url('assets/battle-bg.png') center/cover; opacity:0.65;
 }
 #screen-battle .vignette {
   position:absolute; inset:0;
@@ -248,7 +248,7 @@ body::after {
 }
 .dead-flash {
   position:absolute; inset:-18px;
-  background:url('assets/enemy-dead.png.png') center/contain no-repeat;
+  background:url('assets/enemy-dead.png') center/contain no-repeat;
   opacity:0; pointer-events:none;
 }
 #enemy-root.exploding .dead-flash {
@@ -328,7 +328,7 @@ body::after {
 
 /* ── VICTORY ── */
 #screen-victory { z-index:10; background:var(--dark); }
-#screen-victory .bg { position:absolute; inset:0; background:url('assets/start-bg.jpg.png') center/cover; opacity:0.32; }
+#screen-victory .bg { position:absolute; inset:0; background:url('assets/start-bg.png') center/cover; opacity:0.32; }
 #screen-victory .vignette { position:absolute; inset:0; background:radial-gradient(ellipse at center,transparent 20%,rgba(0,0,0,0.92) 100%); }
 .victory-content {
   position:relative; z-index:1;
@@ -350,7 +350,7 @@ body::after {
 .victory-skill { font-size:clamp(11px,2vw,15px); color:rgba(255,200,100,0.85); letter-spacing:0.12em; animation:fadeUp 0.5s ease 0.5s both; }
 .victory-dead {
   width:clamp(70px,14vw,120px); height:clamp(70px,14vw,120px);
-  background:url('assets/enemy-dead.png.png') center/contain no-repeat;
+  background:url('assets/enemy-dead.png') center/contain no-repeat;
   animation:fadeUp 0.5s ease 0.6s both, deadSpin 4s linear 0.6s infinite; opacity:0.75;
 }
 @keyframes deadSpin { from{transform:rotate(0) scale(1)} 50%{transform:rotate(180deg) scale(1.1)} to{transform:rotate(360deg) scale(1)} }
@@ -410,7 +410,7 @@ body::after {
     <div class="arena">
       <div class="player-side">
         <div id="player-root">
-          <img id="player-sprite" class="idle" src="assets/player-idle.png.png" alt="あすちゃん">
+          <img id="player-sprite" class="idle" src="assets/player-idle.png" alt="あすちゃん">
           <div id="speed-lines"></div>
           <div id="impact-ring"></div>
         </div>
@@ -419,7 +419,7 @@ body::after {
       <div class="vs-badge">VS</div>
       <div class="enemy-side">
         <div id="enemy-root">
-          <img id="enemy-img" src="assets/enemy.png.png" alt="てきモンスター">
+          <img id="enemy-img" src="assets/enemy.png" alt="てきモンスター">
           <div class="dead-flash"></div>
         </div>
         <div class="char-label" id="enemy-label">てきモンスター</div>
@@ -437,7 +437,7 @@ body::after {
 <!-- VIDEO -->
 <div id="screen-video" class="screen">
   <video id="cutin-video" playsinline preload="auto" onclick="skipVideo()">
-    <source src="assets/cutin.mp4.mp4" type="video/mp4">
+    <source src="assets/cutin.mp4" type="video/mp4">
   </video>
   <div id="video-fallback">
     <p>⚡ 動画を読み込めませんでした</p>
@@ -478,12 +478,12 @@ body::after {
 ═══════════════════════════════════════════ */
 const FRAMES = [
   //  src                        ms      tx    sx    idle   instant
-  { src:'player-idle.png.png',   ms:9999, tx:  0, sx: 1, idle:true,  instant:false }, // 0 – idle
-  { src:'player-ready.png.png',  ms: 300, tx:  0, sx: 1, idle:false, instant:true  }, // 1 – windup（溜め・長め）
-  { src:'player-dash.png.png',   ms: 500, tx: 55, sx: 1, idle:false, instant:false }, // 2 – dash（スライド・しっかり見せる）
-  { src:'player-punch.png.png',  ms: 350, tx:115, sx: 1, idle:false, instant:false }, // 3 – punch（インパクト）
-  { src:'player-impact.png.png', ms: 500, tx:115, sx: 1, idle:false, instant:true  }, // 4 – 決めポーズ（長め）
-  { src:'player-back.png.png',   ms: 400, tx:  0, sx:-1, idle:false, instant:false }, // 5 – 帰還
+  { src:'player-idle.png',   ms:9999, tx:  0, sx: 1, idle:true,  instant:false }, // 0 – idle
+  { src:'player-ready.png',  ms: 300, tx:  0, sx: 1, idle:false, instant:true  }, // 1 – windup（溜め・長め）
+  { src:'player-dash.png',   ms: 500, tx: 55, sx: 1, idle:false, instant:false }, // 2 – dash（スライド・しっかり見せる）
+  { src:'player-punch.png',  ms: 350, tx:115, sx: 1, idle:false, instant:false }, // 3 – punch（インパクト）
+  { src:'player-impact.png', ms: 500, tx:115, sx: 1, idle:false, instant:true  }, // 4 – 決めポーズ（長め）
+  { src:'player-back.png',   ms: 400, tx:  0, sx:-1, idle:false, instant:false }, // 5 – 帰還
 ];
 
 const playerRoot   = document.getElementById('player-root');
