@@ -242,94 +242,82 @@ body::after {
 @media (orientation: portrait) {
 
   /* ── スタート ── */
-  .start-logo {
-    width: clamp(220px, 80vw, 400px);
-  }
-  .start-btn-img {
-    width: clamp(180px, 70vw, 320px);
-  }
-  .start-eyecatch {
-    font-size: clamp(10px, 3vw, 14px);
-  }
+  .start-logo { width: clamp(220px, 80vw, 400px); }
+  .start-btn-img { width: clamp(180px, 70vw, 320px); }
+  .start-eyecatch { font-size: clamp(10px, 3vw, 14px); }
 
-  /* ── バトルUI：縦積みグリッドに変更 ── */
+  /* ── バトルUI ── */
   .battle-ui {
     grid-template-rows: auto 1fr auto;
-    padding: clamp(10px,2vh,18px) clamp(10px,3vw,18px);
-    gap: clamp(8px,1.5vh,14px);
+    padding: clamp(8px,1.5vh,14px) clamp(8px,2.5vw,14px);
+    gap: 0; /* gapをなくして詰める */
   }
 
-  /* HPバー：縦では文字を少し大きく */
+  /* HP */
   .hp-label { font-size: clamp(11px,3vw,14px); }
   .hp-track { height: clamp(10px,2vh,14px); }
   .hp-nums { font-size: clamp(10px,2.5vw,13px); }
   .hp-nums .cur { font-size: 1.5em; }
 
-  /* アリーナ：縦では上下に並べる */
+  /* アリーナ：上下配置・中央寄せ・上部に詰める */
   .arena {
-    flex-direction: column-reverse; /* 敵が上、主人公が下 */
+    flex-direction: column-reverse;
     align-items: center;
-    justify-content: flex-end;
-    gap: clamp(10px,3vh,24px);
-    padding: 0 0 clamp(4px,1vh,10px);
+    justify-content: center;   /* 中央寄せ */
+    gap: clamp(4px,1vh,10px);  /* キャラ間を詰める */
+    padding: clamp(4px,1vh,8px) 0;
   }
 
-  /* VS バッジ：縦では非表示（スペース節約） */
   .vs-badge { display: none; }
 
-  /* 主人公：縦では大きめに */
+  /* キャラクター：画面の1/3を占めるサイズ */
   #player-root {
-    width:  clamp(100px, 28vw, 160px);
-    height: clamp(115px, 32vw, 180px);
+    width:  clamp(120px, 38vw, 200px);
+    height: clamp(140px, 43vw, 220px);
   }
-
-  /* 敵：縦では大きめに */
   #enemy-root {
-    width:  clamp(110px, 30vw, 175px);
-    height: clamp(130px, 36vw, 200px);
+    width:  clamp(130px, 40vw, 210px);
+    height: clamp(150px, 45vw, 230px);
   }
 
-  /* キャララベル */
   .char-label { font-size: clamp(11px,3vw,13px); }
 
-  /* スキルボタン：縦では幅広く・タップしやすく */
+  /* ボタン：上に詰める・大きく */
   .skill-btn {
     font-size: clamp(16px,5vw,22px);
-    padding: clamp(14px,3vh,20px) clamp(28px,10vw,60px);
-    width: min(90vw, 360px);
-    justify-content: center;
+    padding: clamp(12px,2.5vh,18px) clamp(28px,10vw,60px);
+    width: min(88vw, 360px);
   }
   .action-hint { font-size: clamp(11px,3vw,13px); }
-
-  /* アクションエリア：下部に余白 */
   .action-area {
-    padding-bottom: clamp(8px,2vh,16px);
-    gap: clamp(8px,1.5vh,14px);
+    padding-bottom: clamp(6px,1.5vh,12px);
+    padding-top: 0;
+    gap: clamp(6px,1.2vh,10px);
   }
 
-  /* 縦のダッシュ：上方向へ */
-  /* player-root の translateX を上書きして縦方向に動かす */
-  /* JSでポートレート時にY方向アニメを使う（下記JSで対応） */
+  /* ── 動画：16:9 中央配置・黒帯あり ── */
+  #screen-video {
+    background: #000;
+    align-items: center;
+    justify-content: center;
+  }
+  #cutin-video {
+    width: 100%;
+    height: auto;
+    max-height: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: contain;   /* 黒帯で余白を埋める */
+  }
 
   /* ── 勝利画面 ── */
-  .victory-logo {
-    width: clamp(220px, 78vw, 380px);
-  }
-  .victory-skill {
-    font-size: clamp(12px,4vw,16px);
-  }
-  .victory-dead {
-    width: clamp(80px,22vw,130px);
-    height: clamp(80px,22vw,130px);
-  }
+  .victory-logo { width: clamp(220px, 78vw, 380px); }
+  .victory-skill { font-size: clamp(12px,4vw,16px); }
+  .victory-dead { width: clamp(80px,22vw,130px); height: clamp(80px,22vw,130px); }
   .replay-btn {
     font-size: clamp(14px,4.5vw,20px);
     padding: clamp(12px,2.5vh,18px) clamp(28px,8vw,52px);
     width: min(80vw, 300px);
-    justify-content: center;
   }
-
-  /* ── 勝利ラベル ── */
   .victory-label { font-size: clamp(10px,3vw,13px); }
 }
 </style>
