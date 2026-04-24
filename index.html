@@ -234,6 +234,104 @@ body::after {
 .v-particles { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
 .vp { position: absolute; border-radius: 50%; animation: vpFly linear infinite; }
 @keyframes vpFly { from{transform:translateY(105vh) rotate(0);opacity:0.9} to{transform:translateY(-10vh) rotate(540deg);opacity:0} }
+
+/* ══════════════════════════════════════
+   縦画面（portrait）対応
+   スマホを縦に持ったとき専用レイアウト
+══════════════════════════════════════ */
+@media (orientation: portrait) {
+
+  /* ── スタート ── */
+  .start-logo {
+    width: clamp(220px, 80vw, 400px);
+  }
+  .start-btn-img {
+    width: clamp(180px, 70vw, 320px);
+  }
+  .start-eyecatch {
+    font-size: clamp(10px, 3vw, 14px);
+  }
+
+  /* ── バトルUI：縦積みグリッドに変更 ── */
+  .battle-ui {
+    grid-template-rows: auto 1fr auto;
+    padding: clamp(10px,2vh,18px) clamp(10px,3vw,18px);
+    gap: clamp(8px,1.5vh,14px);
+  }
+
+  /* HPバー：縦では文字を少し大きく */
+  .hp-label { font-size: clamp(11px,3vw,14px); }
+  .hp-track { height: clamp(10px,2vh,14px); }
+  .hp-nums { font-size: clamp(10px,2.5vw,13px); }
+  .hp-nums .cur { font-size: 1.5em; }
+
+  /* アリーナ：縦では上下に並べる */
+  .arena {
+    flex-direction: column-reverse; /* 敵が上、主人公が下 */
+    align-items: center;
+    justify-content: flex-end;
+    gap: clamp(10px,3vh,24px);
+    padding: 0 0 clamp(4px,1vh,10px);
+  }
+
+  /* VS バッジ：縦では非表示（スペース節約） */
+  .vs-badge { display: none; }
+
+  /* 主人公：縦では大きめに */
+  #player-root {
+    width:  clamp(100px, 28vw, 160px);
+    height: clamp(115px, 32vw, 180px);
+  }
+
+  /* 敵：縦では大きめに */
+  #enemy-root {
+    width:  clamp(110px, 30vw, 175px);
+    height: clamp(130px, 36vw, 200px);
+  }
+
+  /* キャララベル */
+  .char-label { font-size: clamp(11px,3vw,13px); }
+
+  /* スキルボタン：縦では幅広く・タップしやすく */
+  .skill-btn {
+    font-size: clamp(16px,5vw,22px);
+    padding: clamp(14px,3vh,20px) clamp(28px,10vw,60px);
+    width: min(90vw, 360px);
+    justify-content: center;
+  }
+  .action-hint { font-size: clamp(11px,3vw,13px); }
+
+  /* アクションエリア：下部に余白 */
+  .action-area {
+    padding-bottom: clamp(8px,2vh,16px);
+    gap: clamp(8px,1.5vh,14px);
+  }
+
+  /* 縦のダッシュ：上方向へ */
+  /* player-root の translateX を上書きして縦方向に動かす */
+  /* JSでポートレート時にY方向アニメを使う（下記JSで対応） */
+
+  /* ── 勝利画面 ── */
+  .victory-logo {
+    width: clamp(220px, 78vw, 380px);
+  }
+  .victory-skill {
+    font-size: clamp(12px,4vw,16px);
+  }
+  .victory-dead {
+    width: clamp(80px,22vw,130px);
+    height: clamp(80px,22vw,130px);
+  }
+  .replay-btn {
+    font-size: clamp(14px,4.5vw,20px);
+    padding: clamp(12px,2.5vh,18px) clamp(28px,8vw,52px);
+    width: min(80vw, 300px);
+    justify-content: center;
+  }
+
+  /* ── 勝利ラベル ── */
+  .victory-label { font-size: clamp(10px,3vw,13px); }
+}
 </style>
 </head>
 <body>
@@ -383,10 +481,24 @@ const video        = document.getElementById('cutin-video');
 let seqTimer = null;
 let busy = false;
 
+function isPortrait() {
+  return window.matchMedia('(orientation: portrait)').matches;
+}
+
 function applyFrame(idx) {
   const f = FRAMES[idx];
   playerRoot.classList.toggle('instant', f.instant);
-  playerRoot.style.transform = `translateX(${f.tx}%) scaleX(${f.sx})`;
+
+  if (isPortrait()) {
+    // 縦画面：X方向ではなくY方向（上へ突進）
+    // tx をY方向のマイナス（上）に流用。帰還(idx=5)はY=0に戻す
+    const ty = (idx === 2) ? -30 : (idx === 3 || idx === 4) ? -55 : 0;
+    // 縦では左右反転なし
+    playerRoot.style.transform = `translateY(${ty}%) scaleX(1)`;
+  } else {
+    playerRoot.style.transform = `translateX(${f.tx}%) scaleX(${f.sx})`;
+  }
+
   playerSprite.src = 'assets/' + f.src;
   playerSprite.className = f.idle ? 'idle' : '';
   speedLines.classList.toggle('show', idx === 2);
