@@ -259,25 +259,30 @@ body::after {
   .hp-nums { font-size: clamp(10px,2.5vw,13px); }
   .hp-nums .cur { font-size: 1.5em; }
 
-  /* アリーナ：上下配置・中央寄せ・上部に詰める */
+  /* アリーナ：横並び維持・中央に詰める */
   .arena {
-    flex-direction: column-reverse;
-    align-items: center;
-    justify-content: center;   /* 中央寄せ */
-    gap: clamp(4px,1vh,10px);  /* キャラ間を詰める */
-    padding: clamp(4px,1vh,8px) 0;
+    flex-direction: row;           /* 横並びに戻す */
+    align-items: flex-end;
+    justify-content: space-around; /* 均等配置で隙間を詰める */
+    gap: 0;
+    padding: clamp(4px,1vh,8px) clamp(4px,1.5vw,10px);
   }
 
-  .vs-badge { display: none; }
+  .vs-badge {
+    display: block;                /* VS表示を復活 */
+    font-size: clamp(14px,5vw,22px);
+    flex-shrink: 0;
+    padding: 0 2px;
+  }
 
-  /* キャラクター：画面の1/3を占めるサイズ */
+  /* キャラクター：現状サイズ感を維持しつつ被らない幅 */
   #player-root {
-    width:  clamp(120px, 38vw, 200px);
-    height: clamp(140px, 43vw, 220px);
+    width:  clamp(90px, 30vw, 150px);
+    height: clamp(105px, 35vw, 170px);
   }
   #enemy-root {
-    width:  clamp(130px, 40vw, 210px);
-    height: clamp(150px, 45vw, 230px);
+    width:  clamp(95px, 32vw, 155px);
+    height: clamp(110px, 37vw, 175px);
   }
 
   .char-label { font-size: clamp(11px,3vw,13px); }
@@ -612,11 +617,9 @@ function explodeEnemy() {
   // 爆発2.0秒後にあすちゃん帰還（ゆっくり800ms）
   setTimeout(() => {
     applyFrame(5);
-    // 帰還後→BGM再開→勝利画面
+    // 帰還後→BGM再開→勝利画面（BGMはそのまま流し続ける）
     setTimeout(() => {
       resumeBGM();
-      // 勝利画面でBGM止める
-      setTimeout(stopBGM, 600);
       showVictory();
     }, FRAMES[5].ms + 100);
   }, 2000);
@@ -633,7 +636,7 @@ function showVictory() {
 function resetGame() {
   clearTimeout(seqTimer);
   busy = false;
-  stopBGM();
+  stopBGM(); // スタート画面に戻るときだけBGM停止
   fadeOverlay(1, 300, () => {
     enemyRoot.classList.remove('exploding','hit');
     actionArea.classList.remove('hidden');
